@@ -17,6 +17,10 @@
 node_modules/
 
 # FE Source Code
-/pages
-/lib
+/assets
 /components
+/hooks
+/lib
+/pages
+/styles
+/utils

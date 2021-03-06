@@ -6,23 +6,23 @@ import Navbar from '@/components/landing/Navbar';
 import SocialSignIn from './SocialSignIn';
 
 const Header = () => {
-  const auth = useAuth();
-  console.log(auth);
-  const { user } = auth;
+  const { user } = useAuth();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   return (
-    <div className="bg-black bg-hero-img bg-cover h-full">
+    <div className="bg-hero-img bg-cover h-full">
       <Navbar />
       <div className="container mx-auto px-4 xl:px-0">
         <div className="flex flex-col md:flex-row justify-center items-center flex-wrap md:pt-48 md:py-72 py-16">
           <div className="max-w-3xl w-full md:max-w-2xl lg:w-1/2 mr-12">
             <div className="pb-8">
               <h1 className="text-white font-bold leading-2 text-5xl md:text-7xl pb-4">
-              <span className="text-pri-yellow">Re-</span>imagining virtual classroom
+                <span className="text-pri-yellow">Re-</span>imagining virtual
+                classroom
               </h1>
               <p className="text-left text-white text-2xl leading-12">
-                Creating flexible and collaborative learning experience to boost your productivity
+                Creating flexible and collaborative learning experience to boost
+                your productivity
               </p>
             </div>
             <button
@@ -41,7 +41,7 @@ const Header = () => {
           <div className="md:w-1/2">
             <img
               className="md:ml-12 mt-6 md:mt-0 w-full"
-              src="/images/header-img.png"
+              src="/images/header-img.gif"
               alt="Table"
             />
           </div>

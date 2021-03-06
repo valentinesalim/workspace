@@ -19,7 +19,9 @@ const Navbar = () => {
           <div className="flex">
             <ul className="font-normal text-lg flex space-x-16 justify-between items-center text-white">
               <li className="text-white cursor-pointer">
-                <a className="hover:text-pri-yellow transition duration-200 ease-in-out">Home</a>
+                <a className="hover:text-pri-yellow transition duration-200 ease-in-out">
+                  Home
+                </a>
               </li>
               {user ? (
                 <li className="text-white cursor-pointer">
@@ -60,22 +62,22 @@ const Navbar = () => {
                 className=" py-2 mx-8 border-r bg-white absolute rounded top-0 left-0 right-0 shadow mt-20 md:px-4 md:mt-20 z-20"
               >
                 <li className="flex justify-center cursor-pointer text-gray-800 text-sm leading-3 tracking-normal py-2 hover:text-pri-yellow focus:text-pri-yellow focus:outline-none">
-                  <a href="_blank">
+                  <a>
                     <span className="font-bold text-md">Home</span>
                   </a>
                 </li>
                 {user ? (
                   <li className="flex justify-center cursor-pointer text-gray-800 text-sm leading-3 tracking-normal py-2 hover:text-pri-yellow focus:text-pri-yellow focus:outline-none">
-                    <a href="_blank" onClick={() => router.push(LOGGED_IN_URL)}>
+                    <a onClick={() => router.push(LOGGED_IN_URL)}>
                       <span className="font-bold text-md">Dashboard</span>
-                    </a>                    
-                    <a href="_blank" onClick={() => signOut()}>
+                    </a>
+                    <a onClick={() => signOut()}>
                       <span className="font-bold text-md">Sign Out</span>
                     </a>
                   </li>
                 ) : (
                   <li className="flex justify-center cursor-pointer text-gray-800 text-sm leading-3 tracking-normal py-2 hover:text-pri-yellow focus:text-pri-yellow focus:outline-none">
-                    <a href="_blank">
+                    <a>
                       <span className="font-bold text-md">Get Started</span>
                     </a>
                   </li>
