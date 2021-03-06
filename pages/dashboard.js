@@ -6,9 +6,12 @@ import Avatar from '@/components/dashboard/Avatar';
 import LeaveCallModal from '@/components/dashboard/LeaveCallModal';
 import Message from '@/components/dashboard/Message';
 import moment from 'moment';
+import sanitize from '@/utils/linkSanitizer';
 
 const Dashboard = () => {
   const auth = useAuth();
+  const [website, setWebsite] = useState('https://tailwindcss.com/');
+  const [websiteInput, setWebsiteInput] = useState('https://tailwindcss.com/');
   const [message, setMessage] = useState('');
   const [sessionMessages, setSessionMessages] = useState([]);
   const [open, setOpen] = useState(false);
@@ -20,12 +23,14 @@ const Dashboard = () => {
     'https://avatars.githubusercontent.com/u/13199016?s=460&u=40af1d489c8cdfa2ee4fbf3bf8e8fb68ada19aae&v=4'
   ];
 
-  const handleMessageSubmit = (e) => {
+  const handleMessageSubmit = async (e) => {
     e.preventDefault();
 
     if (!!!message) return;
 
-    const { photoUrl, name } = auth.user;
+    const { photoUrl, name } = await auth.user;
+
+    console.log(auth.user);
 
     const messageObj = {
       msg: message,
@@ -38,6 +43,18 @@ const Dashboard = () => {
 
     // force reset
     setMessage('');
+  };
+
+  const updateWebsite = (e) => {
+    e.preventDefault();
+    const URLExpression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+
+    const regex = new RegExp(URLExpression);
+
+    if (!websiteInput.match(regex)) return;
+
+    const sanitizedLink = sanitize(websiteInput);
+    setWebsite(sanitizedLink);
   };
 
   return (
@@ -53,10 +70,19 @@ const Dashboard = () => {
                 <div className="flex-1 flex-shrink-0 bg-gray-900 overflow-y-scroll">
                   <div className="flex flex-col h-screen">
                     <div className="bg-blueGray-700 h-5/6">
+                      <form onSubmit={updateWebsite}>
+                        <input
+                          value={websiteInput}
+                          onChange={(e) => setWebsiteInput(e.target.value)}
+                          className="w-full font-mono tracking-wide	 py-4 text-center bg-blueGray-700 focus:outline-none text-gray-100 text-md flex items-start justify-start"
+                          placeholder="Change Website"
+                        />
+                      </form>
+
                       <div
                         className="relative w-full h-full overflow:hidden"
                         dangerouslySetInnerHTML={{
-                          __html: "<embed src='https://tailwindcss.com/' />"
+                          __html: `<embed src=${website} />`
                         }}
                       />
                     </div>
@@ -81,7 +107,7 @@ const Dashboard = () => {
                       <div className="flex flex-row justify-between items-center mb-4">
                         <h1 className="text-white font-normal text-3xl">
                           Chat
-                         </h1>
+                        </h1>
                         <button className=" rounded shadow-sm bg-blue-700 px-2 py-2 text-white text-sm font-semibold">
                           Invite Friends
                         </button>
