@@ -35,7 +35,7 @@ export default function Highlights() {
       desc:
         'Better than your average whiteboard, we helps you ideate, strategize, get organized and collaborate easier with your team.',
       img: 'co-whiteboard.png',
-      imgCss: 'w-full md:w-1/3 -m-16 mr-0'
+      imgCss: 'w-full md:w-1/3 m-0 lg:-m-16 mr-0'
     },
     {
       name: 'Co-browse',
