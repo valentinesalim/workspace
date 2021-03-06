@@ -14,7 +14,7 @@ const STEPS = {
 
 const Content = ({ setOpen }) => {
   const router = useRouter();
-  const { updateUser } = useAuth();
+  const auth = useAuth();
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState('');
 
@@ -22,8 +22,7 @@ const Content = ({ setOpen }) => {
 
   useEffect(() => {
     if (step == STEPS.Closed) {
-      updateUser({ phone })
-      .then(() => {
+      auth.updateUser({ phone }).then(() => {
         router.push(LOGGED_IN_URL);
         setOpen(false);
       });
@@ -32,7 +31,7 @@ const Content = ({ setOpen }) => {
 
   switch (step) {
     case STEPS.Login:
-      return <Login advance={advance} />;
+      return <Login advance={advance} auth={auth} />;
     case STEPS.Phone:
       return (
         <Phone
@@ -43,7 +42,7 @@ const Content = ({ setOpen }) => {
         />
       );
     case STEPS.Closed:
-      console.log(`registration complete: ${phone}`)
+      console.log(`registration complete: ${phone}`);
   }
   return null;
 };

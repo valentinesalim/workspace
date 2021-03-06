@@ -24,3 +24,5 @@ node_modules/
 /pages
 /styles
 /utils
+
+.next
