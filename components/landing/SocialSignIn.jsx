@@ -19,7 +19,7 @@ const SocialSignIn = ({ setOpen }) => {
       style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
       className="fixed inset-0 z-50 overflow-auto h-screen w-full flex flex-row items-center justify-center md:px-0 px-12"
     >
-      <div className="z-20 bg-yellow-500 shadow-lg rounded-sm relative pt-4 pb-6 px-8 w-full max-w-sm m-auto flex-col flex">
+      <div className="z-20 bg-black shadow-lg rounded-sm relative pt-4 pb-6 px-8 w-full max-w-sm m-auto flex-col flex">
         <svg
           className="w-6 h-6 absolute top-4 right-4 text-gray-300 cursor-pointer"
           onClick={() => setOpen(false)}
@@ -53,7 +53,7 @@ const SocialSignIn = ({ setOpen }) => {
         <div className="mt-4 flex flex-col space-y-4 justify-center">
           <button
             onClick={() =>
-              auth.signInWithGoogle().then(() => router.push(LOGGED_IN_URL))
+              auth.signInWithGoogle().then(() => router.push(LOGGED_IN_URL) && setOpen(false))
             }
             className="bg-white w-full flex flex-row justify-center items-center rounded shadow-sm transition duration-200 ease-in-out transform hover:-translate-y-1"
           >
@@ -66,7 +66,7 @@ const SocialSignIn = ({ setOpen }) => {
           </button>
           <button
             onClick={() =>
-              auth.signInWithGithub().then(() => router.push(LOGGED_IN_URL))
+              auth.signInWithGithub().then(() => router.push(LOGGED_IN_URL) && setOpen(false))
             }
             className="bg-gray-900 w-full flex flex-row justify-center items-center rounded shadow-sm transition duration-200 ease-in-out transform hover:-translate-y-1"
           >

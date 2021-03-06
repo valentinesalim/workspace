@@ -17,6 +17,6 @@
 node_modules/
 
 # FE Source Code
-pages/
-lib/
-components/
+/pages
+/lib
+/components

@@ -10,7 +10,9 @@ export default function LogoText({ showImage, hideText }) {
         ) : null}
         {hideText ? null : (
           <h1 className="lg:ml-2 text-white font-bold text-3xl">
-            Work.Space
+            <span className="text-pri-orange">Work</span>
+            <span className="text-pri-blue">.</span>
+            <span className="text-pri-yellow">Space</span>
           </h1>
         )}
       </div>
