@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
-import { useAuth } from '@/lib/auth';
 import LogoText from '@/components/LogoText';
 
-const Login = ({ advance }) => {
-  const { user, signInWithGoogle, signInWithGithub } = useAuth();
+const Login = ({ auth, advance }) => {
+  const { user, signInWithGoogle, signInWithGithub } = auth;
 
   useEffect(() => {
     user && advance();
