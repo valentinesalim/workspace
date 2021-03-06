@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useAuth } from '@/lib/auth';
 import { LOGGED_IN_URL } from '@/lib/constants';
 import Navbar from '@/components/landing/Navbar';
-import SocialSignIn from './SocialSignIn';
+import Signin from './SignIn';
 
 const Header = () => {
   const { user } = useAuth();
@@ -47,7 +47,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      {open && <SocialSignIn setOpen={setOpen} />}
+      {open && <Signin setOpen={setOpen} />}
     </div>
   );
 };

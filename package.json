@@ -9,13 +9,15 @@
     "deploy": "yarn build && gcloud app deploy --project great-workspace"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "firebase": "^8.2.10",
     "framer-motion": "^3.10.0",
     "js-cookie": "^2.2.1",
     "next": "10.0.8",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-icons": "^4.2.0"
+    "react-icons": "^4.2.0",
+    "react-phone-number-input": "^3.1.16"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.5",

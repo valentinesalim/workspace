@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/lib/auth';
 import { LOGGED_IN_URL } from '@/lib/constants';
-import SocialSignIn from './SocialSignIn';
+import Signin from './SignIn';
 import LogoText from '../LogoText';
 
 const Navbar = () => {
@@ -23,7 +23,7 @@ const Navbar = () => {
                   Home
                 </a>
               </li>
-              {user ? (
+              {user && user.phone ? (
                 <li className="text-white cursor-pointer">
                   <a
                     onClick={() => router.push(LOGGED_IN_URL)}
@@ -66,7 +66,7 @@ const Navbar = () => {
                     <span className="font-bold text-md">Home</span>
                   </a>
                 </li>
-                {user ? (
+                {user && user.phone ? (
                   <li className="flex justify-center cursor-pointer text-gray-800 text-sm leading-3 tracking-normal py-2 hover:text-pri-yellow focus:text-pri-yellow focus:outline-none">
                     <a onClick={() => router.push(LOGGED_IN_URL)}>
                       <span className="font-bold text-md">Dashboard</span>
@@ -129,7 +129,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      {open && <SocialSignIn setOpen={setOpen} />}
+      {open && <Signin setOpen={setOpen} />}
     </div>
   );
 };

@@ -31,7 +31,8 @@ module.exports = {
       pri: {
         blue: '#0052A5',
         yellow: '#FFBF2F',
-        orange: '#FF7056'
+        orange: '#FF7056',
+        gray: '#B6B6B6'
       }
     },
     spacing: {
