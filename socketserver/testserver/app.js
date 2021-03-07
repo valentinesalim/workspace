@@ -15,8 +15,16 @@ app.get('/', (req, res) => {
   res.send('API is running!');
 });
 
+const user2clients = {};
 io.on('connection', (socket) => {
   console.log('User connected!', socket.id);
+  const uid = socket.handshake?.auth?.uid;
+  if (uid) {
+    user2clients[uid]
+      ? user2clients[uid].push(socket.id)
+      : (user2clients[uid] = [socket.id]);
+    console.log(user2clients);
+  }
 
   socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
 
@@ -26,6 +34,18 @@ io.on('connection', (socket) => {
 
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
+  });
+
+  socket.on('disconnect', (reason) => {
+    console.log('User disconnected!', socket.id);
+
+    if (uid) {
+      user2clients[uid] = user2clients[uid].filter((id) => id !== socket.id);
+      if (!user2clients[uid].length) {
+        delete user2clients.uid;
+      }
+      console.log(user2clients);
+    }
   });
 });
 

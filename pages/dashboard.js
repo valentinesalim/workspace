@@ -101,8 +101,8 @@ const Dashboard = () => {
                         ✌️ Leave Call
                       </button>
                       <div className="flex flex-row justify-center items-center h-full space-x-4">
-                        {videoCallers.map((photoURL) => (
-                          <Avatar imgURL={photoURL} />
+                        {videoCallers.map((photoURL, idx) => (
+                          <Avatar key={idx} imgURL={photoURL} />
                         ))}
                       </div>
                     </div>
@@ -110,7 +110,7 @@ const Dashboard = () => {
                 </div>
                 <div className="relative flex-shrink-0 w-72 h-full">
                   <div className="h-screen flex flex-col">
-                    <div class="px-5 py-4">
+                    <div className="px-5 py-4">
                       <div className="flex flex-row justify-between items-center mb-4">
                         <h1 className="text-white font-normal text-3xl">
                           Chat
@@ -142,8 +142,8 @@ const Dashboard = () => {
                               Send the first message
                             </div>
                           )}
-                          {sessionMessages.map((message) => (
-                            <Message {...message} />
+                          {sessionMessages.map((message, idx) => (
+                            <Message key={idx} {...message} />
                           ))}
                         </div>
                       </div>

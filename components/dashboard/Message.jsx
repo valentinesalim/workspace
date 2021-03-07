@@ -13,7 +13,7 @@ const Message = ({ msg, sender, photoURL, time }) => {
         src={photoURL}
         alt={sender}
       />
-      <div class="flex flex-col items-start justify-center text-gray-200">
+      <div className="flex flex-col items-start justify-center text-gray-200">
         <div className="flex flex-row text-xs mb-px">
           <p className="text-xs mb-px">{sender} • </p>
           <span className="ml-1 text-gray-50">{time}</span>

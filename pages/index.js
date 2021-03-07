@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="bg-black text-white">
       <Head>
-        <title>Create Next App</title>
+        <title>Work.Space</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header/>

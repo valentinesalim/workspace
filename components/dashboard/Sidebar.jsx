@@ -1,16 +1,14 @@
-import React from 'react';
-import { useRouter } from 'next/router';
 import { useAuth } from '@/lib/auth';
+import LogoText from '@/components/LogoText';
 
 const Sidebar = ({ setWhiteboardMode }) => {
   const auth = useAuth();
-  const router = useRouter();
 
   return (
     <div className={`block h-screen lg:flex-shrink-0 bg-blueGray-800 w-24`}>
       <div className="px-4 py-16">
         <div className="flex flex-row justify-center items-center ">
-          <img className="w-20" src="/images/logo.png" alt="me" />
+          <LogoText showImage hideText />
         </div>
       </div>
       <div className="mt-6">
@@ -40,7 +38,7 @@ const Sidebar = ({ setWhiteboardMode }) => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-artboard"
+              className="icon icon-tabler icon-tabler-artboard"
               width="44"
               height="44"
               viewBox="0 0 24 24"
