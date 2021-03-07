@@ -1,3 +1,5 @@
+![alt text](https://media.giphy.com/media/03i0CuQE4z1gXCkCCC/giphy.gif)
+
 We submitted this project to SFHacks.
 
 Devpost: https://devpost.com/software/work-space
