@@ -1,14 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
+import io from 'socket.io-client';
 
 const Whiteboard = () => {
+  let timeout = useState(undefined);
   const [tooltype, setToolType] = useState('draw');
   const canvasRef = useRef(null);
   const colorsRef = useRef(null);
-  const socketRef = useRef();
 
   useEffect(() => {
     // --------------- getContext() method returns a drawing context on the canvas-----
 
+    const socketRef = io('http://localhost:8080');
     const canvas = canvasRef.current;
     const test = colorsRef.current;
     const context = canvas.getContext('2d');
@@ -26,8 +28,6 @@ const Whiteboard = () => {
     // ----------------------- Colors --------------------------------------------------
 
     const colors = document.getElementsByClassName('color');
-    console.log(colors, 'the colors');
-    console.log(test);
     // set the current color
     const current = {
       color: 'black'
@@ -48,7 +48,6 @@ const Whiteboard = () => {
 
     const drawLine = (x0, y0, x1, y1, color, emit) => {
       context.beginPath();
-      console.log(tooltype);
       if (tooltype == 'draw') {
         context.globalCompositeOperation = 'source-over';
       } else {
@@ -70,15 +69,14 @@ const Whiteboard = () => {
       const h = canvas.height;
 
       // Cache all drawings to local storage
-      localStorage.setItem('canvasInstance', canvas.toDataURL());
+      const base64ImageData = canvas.toDataURL('image/png');
+      if (timeout != undefined) clearTimeout();
 
-      //   socketRef.current.emit('drawing', {
-      //     x0: x0 / w,
-      //     y0: y0 / h,
-      //     x1: x1 / w,
-      //     y1: y1 / h,
-      //     color
-      //   });
+      timeout = setTimeout(function () {
+        localStorage.setItem('canvasInstance', base64ImageData);
+        // MESSAGE EMITTING
+        socketRef.emit('drawing', base64ImageData);
+      });
     };
 
     // ---------------- mouse movement --------------------------------------
@@ -144,13 +142,13 @@ const Whiteboard = () => {
     canvas.addEventListener('mousedown', onMouseDown, false);
     canvas.addEventListener('mouseup', onMouseUp, false);
     canvas.addEventListener('mouseout', onMouseUp, false);
-    canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);
+    canvas.addEventListener('mousemove', onMouseMove, false);
 
     // Touch support for mobile devices
     canvas.addEventListener('touchstart', onMouseDown, false);
     canvas.addEventListener('touchend', onMouseUp, false);
     canvas.addEventListener('touchcancel', onMouseUp, false);
-    canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
+    canvas.addEventListener('touchmove', onMouseMove, false);
 
     // -------------- make the canvas fill its parent component -----------------
 
@@ -161,6 +159,7 @@ const Whiteboard = () => {
       const h = BB.bottom - BB.top;
 
       if (w > 0 && h > 0) {
+        const base64ImageData = canvas.toDataURL('image/png');
         const temp_cnvs = document.createElement('canvas');
         const temp_cntx = temp_cnvs.getContext('2d');
         // set it to the new width & height and draw the current canvas data into it //
@@ -169,10 +168,13 @@ const Whiteboard = () => {
         temp_cntx.fillStyle = '#fff';
         temp_cntx.fillRect(0, 0, w, h);
 
-        canvas.width = BB.right - BB.left;
-        canvas.height = BB.bottom - BB.top;
+        canvas.width = w;
+        canvas.height = h;
 
-        temp_cntx?.drawImage(canvas, 0, 0);
+        const img = new Image();
+        img.src = base64ImageData;
+
+        temp_cntx?.drawImage(img, 0, 0);
         context?.drawImage(temp_cnvs, 0, 0);
       }
     };
@@ -180,24 +182,32 @@ const Whiteboard = () => {
     window.addEventListener('resize', onResize, false);
     onResize();
 
-    // ----------------------- socket.io connection ----------------------------
-    // const onDrawingEvent = (data) => {
-    //   const w = canvas.width;
-    //   const h = canvas.height;
-    //   drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
-    // };
+    // ----------------------- socket.io connection (MESSAGE RECEIVING) ----------------------------
+    const onDrawingEvent = (data) => {
+      const image = new Image();
+      image.onload = function () {
+        context.drawImage(image, 0, 0);
+      };
+      image.src = data;
+    };
 
-    // socketRef.current = io.connect('/');
-    // socketRef.current.on('drawing', onDrawingEvent);
+    const clearWhiteboardEvent = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    };
+
+    socketRef.on('drawing', onDrawingEvent);
+    socketRef.on('clear_whiteboard', clearWhiteboardEvent);
   }, []);
 
   const clearWhiteboard = () => {
-    console.log('clearing whiteboard');
+    const socketRef = io('http://localhost:8080');
     localStorage.removeItem('canvasInstance');
 
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
+
+    socketRef.emit('clear_whiteboard');
   };
 
   return (

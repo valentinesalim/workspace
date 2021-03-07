@@ -10,12 +10,14 @@
   },
   "scripts": {
     "deploy": "gcloud app deploy",
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "test": "mocha --exit test/*.test.js",
     "e2e-test": "samples test deploy"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.15.4",
+    "nodemon": "^2.0.7",
     "pug": "^3.0.0",
     "socket.io": "^3.0.0",
     "supertest": "^6.0.0"
