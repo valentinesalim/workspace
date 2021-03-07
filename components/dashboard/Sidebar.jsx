@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-const Sidebar = () => {
+const Sidebar = ({ setWhiteboardMode }) => {
   const router = useRouter();
 
   return (
@@ -14,7 +14,7 @@ const Sidebar = () => {
       <div className="mt-6">
         <ul className="w-full">
           <li
-            onClick={() => router.push('/dashboard')}
+            onClick={() => setWhiteboardMode(false)}
             className="hover:bg-blueGray-500 py-6 text-center cursor-pointer text-white text-lg font-medium flex justify-center"
           >
             <svg
@@ -30,6 +30,34 @@ const Sidebar = () => {
                 strokeWidth={2}
                 d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
               />
+            </svg>
+          </li>
+          <li
+            onClick={() => setWhiteboardMode(true)}
+            className="hover:bg-blueGray-500 py-6 text-center cursor-pointer text-white text-lg font-medium flex justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-artboard"
+              width="44"
+              height="44"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <rect x="8" y="8" width="8" height="8" rx="1" />
+              <line x1="3" y1="8" x2="4" y2="8" />
+              <line x1="3" y1="16" x2="4" y2="16" />
+              <line x1="8" y1="3" x2="8" y2="4" />
+              <line x1="16" y1="3" x2="16" y2="4" />
+              <line x1="20" y1="8" x2="21" y2="8" />
+              <line x1="20" y1="16" x2="21" y2="16" />
+              <line x1="8" y1="20" x2="8" y2="21" />
+              <line x1="16" y1="20" x2="16" y2="21" />
             </svg>
           </li>
           <li
@@ -49,31 +77,6 @@ const Sidebar = () => {
               <line x1="9" y1="7" x2="15" y2="7" />
               <line x1="9" y1="11" x2="15" y2="11" />
               <line x1="9" y1="15" x2="13" y2="15" />
-            </svg>
-          </li>
-
-          <li
-            onClick={() => router.push('/preference')}
-            className="hover:bg-blueGray-500 py-6 text-center cursor-pointer text-white text-lg font-medium flex justify-center"
-          >
-            <svg
-              className="w-8 h-8 text-center"
-              xmlns="http://www.w3.org/2000/svg"
-              className="icon icon-tabler icon-tabler-layout-kanban"
-              width="44"
-              height="44"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <line x1="4" y1="4" x2="10" y2="4" />
-              <line x1="14" y1="4" x2="20" y2="4" />
-              <rect x="4" y="8" width="6" height="12" rx="2" />
-              <rect x="14" y="8" width="6" height="6" rx="2" />
             </svg>
           </li>
           <li className="hover:bg-blueGray-500 py-6 text-center cursor-pointer text-white text-lg font-medium flex justify-center">

@@ -7,6 +7,7 @@ import LeaveCallModal from '@/components/dashboard/LeaveCallModal';
 import Message from '@/components/dashboard/Message';
 import moment from 'moment';
 import sanitize from '@/utils/linkSanitizer';
+import Whiteboard from '@/components/dashboard/Whiteboard';
 
 const Dashboard = () => {
   const auth = useAuth();
@@ -15,6 +16,7 @@ const Dashboard = () => {
   const [message, setMessage] = useState('');
   const [sessionMessages, setSessionMessages] = useState([]);
   const [open, setOpen] = useState(false);
+  const [whiteboardMode, setWhiteboardMode] = useState(false);
 
   const videoCallers = [
     'https://avatars.githubusercontent.com/u/34843135?s=460&u=183d2d1226afa9895162640e9003eba9ed375e46&v=4',
@@ -60,7 +62,7 @@ const Dashboard = () => {
   return (
     <div className="bg-gray-900 w-full">
       <div className="flex flex-row relative flex-no-wrap">
-        <Sidebar />
+        <Sidebar setWhiteboardMode={setWhiteboardMode} />
         {!auth.user ? (
           <Loader />
         ) : (
@@ -70,21 +72,26 @@ const Dashboard = () => {
                 <div className="flex-1 flex-shrink-0 bg-gray-900 overflow-y-scroll">
                   <div className="flex flex-col h-screen">
                     <div className="bg-blueGray-700 h-5/6">
-                      <form onSubmit={updateWebsite}>
-                        <input
-                          value={websiteInput}
-                          onChange={(e) => setWebsiteInput(e.target.value)}
-                          className="w-full font-mono tracking-wide	 py-4 text-center bg-blueGray-700 focus:outline-none text-gray-100 text-md flex items-start justify-start"
-                          placeholder="Change Website"
-                        />
-                      </form>
-
-                      <div
-                        className="relative w-full h-full overflow:hidden"
-                        dangerouslySetInnerHTML={{
-                          __html: `<embed src=${website} />`
-                        }}
-                      />
+                      {!whiteboardMode ? (
+                        <>
+                          <form onSubmit={updateWebsite}>
+                            <input
+                              value={websiteInput}
+                              onChange={(e) => setWebsiteInput(e.target.value)}
+                              className="w-full font-mono tracking-wide	 py-4 text-center bg-blueGray-700 focus:outline-none text-gray-100 text-md flex items-start justify-start"
+                              placeholder="Change Website"
+                            />
+                          </form>
+                          <div
+                            className="relative w-full h-full overflow:hidden"
+                            dangerouslySetInnerHTML={{
+                              __html: `<embed src=${website} allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" />`
+                            }}
+                          />
+                        </>
+                      ) : (
+                        <Whiteboard />
+                      )}
                     </div>
                     <div className="relative bg-blueGray-700 w-full h-1/6">
                       <button
