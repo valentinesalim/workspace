@@ -25,11 +25,11 @@ const Header = () => {
           <div className="max-w-3xl w-full md:max-w-2xl lg:w-1/2 mr-12">
             <div className="pb-8">
               <h1 className="text-white font-bold leading-2 text-5xl md:text-7xl pb-4">
-                <span className="text-pri-yellow">Re-</span>imagining virtual
-                classroom
+                <span className="text-pri-yellow">Re-</span>imagining <br />{' '}
+                virtual workspace
               </h1>
               <p className="text-left text-white text-2xl leading-12">
-                Creating flexible and collaborative learning experience to boost
+                Creating flexible and collaborative working experience to boost
                 your productivity
               </p>
             </div>

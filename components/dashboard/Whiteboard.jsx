@@ -203,6 +203,7 @@ const Whiteboard = () => {
   }, []);
 
   const clearWhiteboard = () => {
+    const socketRef = io.connect('http://localhost:8080');
     localStorage.removeItem('canvasInstance');
 
     const canvas = canvasRef.current;

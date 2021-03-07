@@ -28,7 +28,7 @@ const Sidebar = ({ STEPS, setStep, setWhiteboardMode }) => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
               />
             </svg>
           </li>
@@ -37,27 +37,18 @@ const Sidebar = ({ STEPS, setStep, setWhiteboardMode }) => {
             className="hover:bg-blueGray-500 py-6 text-center cursor-pointer text-white text-lg font-medium flex justify-center"
           >
             <svg
+              className="w-8 h-8 text-center"
               xmlns="http://www.w3.org/2000/svg"
-              className="icon icon-tabler icon-tabler-artboard"
-              width="44"
-              height="44"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
               fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <rect x="8" y="8" width="8" height="8" rx="1" />
-              <line x1="3" y1="8" x2="4" y2="8" />
-              <line x1="3" y1="16" x2="4" y2="16" />
-              <line x1="8" y1="3" x2="8" y2="4" />
-              <line x1="16" y1="3" x2="16" y2="4" />
-              <line x1="20" y1="8" x2="21" y2="8" />
-              <line x1="20" y1="16" x2="21" y2="16" />
-              <line x1="8" y1="20" x2="8" y2="21" />
-              <line x1="16" y1="20" x2="16" y2="21" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
+              />
             </svg>
           </li>
           <li
