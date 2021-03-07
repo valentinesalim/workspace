@@ -6,4 +6,8 @@
   embed {
     @apply absolute inset-0 w-full h-full;
   }
+
+  textarea {
+    @apply w-full h-screen !important;
+  }
 }

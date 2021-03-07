@@ -1,7 +1,7 @@
 import { useAuth } from '@/lib/auth';
 import LogoText from '@/components/LogoText';
 
-const Sidebar = ({ setWhiteboardMode }) => {
+const Sidebar = ({ STEPS, setStep, setWhiteboardMode }) => {
   const auth = useAuth();
 
   return (
@@ -14,7 +14,7 @@ const Sidebar = ({ setWhiteboardMode }) => {
       <div className="mt-6">
         <ul className="w-full">
           <li
-            onClick={() => setWhiteboardMode(false)}
+            onClick={() => setStep(STEPS.Browser)}
             className="hover:bg-blueGray-500 py-6 text-center cursor-pointer text-white text-lg font-medium flex justify-center"
           >
             <svg
@@ -33,7 +33,7 @@ const Sidebar = ({ setWhiteboardMode }) => {
             </svg>
           </li>
           <li
-            onClick={() => setWhiteboardMode(true)}
+            onClick={() => setStep(STEPS.Whiteboard)}
             className="hover:bg-blueGray-500 py-6 text-center cursor-pointer text-white text-lg font-medium flex justify-center"
           >
             <svg
@@ -60,7 +60,10 @@ const Sidebar = ({ setWhiteboardMode }) => {
               <line x1="16" y1="20" x2="16" y2="21" />
             </svg>
           </li>
-          <li className="hover:bg-blueGray-500 py-6 text-center cursor-pointer text-white text-lg font-medium flex justify-center">
+          <li
+            onClick={() => setStep(STEPS.Notes)}
+            className="hover:bg-blueGray-500 py-6 text-center cursor-pointer text-white text-lg font-medium flex justify-center"
+          >
             <svg
               className="w-8 h-8 text-center"
               xmlns="http://www.w3.org/2000/svg"

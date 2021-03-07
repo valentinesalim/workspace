@@ -12,16 +12,23 @@ import io from 'socket.io-client';
 
 import { useRouter } from 'next/router';
 import { addMessage, retrieveRoomData } from '@/lib/firestore';
+import Notes from '@/components/dashboard/Notes';
+
+const STEPS = {
+  Browser: 0,
+  Whiteboard: 1,
+  Notes: 2
+};
 
 const Dashboard = () => {
   const auth = useAuth();
-
   const router = useRouter();
   const [website, setWebsite] = useState('https://tailwindcss.com/');
   const [websiteInput, setWebsiteInput] = useState('https://tailwindcss.com/');
   const [message, setMessage] = useState('');
   const [sessionMessages, setSessionMessages] = useState([]);
   const [open, setOpen] = useState(false);
+  const [step, setStep] = useState(0);
   const [whiteboardMode, setWhiteboardMode] = useState(false);
 
   const videoCallers = [
@@ -93,7 +100,11 @@ const Dashboard = () => {
   return (
     <div className="bg-gray-900 w-full">
       <div className="flex flex-row relative flex-no-wrap">
-        <Sidebar setWhiteboardMode={setWhiteboardMode} />
+        <Sidebar
+          STEPS={STEPS}
+          setStep={setStep}
+          setWhiteboardMode={setWhiteboardMode}
+        />
         {!auth.user ? (
           <Loader />
         ) : (
@@ -103,7 +114,7 @@ const Dashboard = () => {
                 <div className="flex-1 flex-shrink-0 bg-gray-900 overflow-y-scroll">
                   <div className="flex flex-col h-screen">
                     <div className="bg-blueGray-700 h-5/6">
-                      {!whiteboardMode ? (
+                      {step === STEPS.Browser && (
                         <>
                           <form onSubmit={updateWebsite}>
                             <input
@@ -120,9 +131,9 @@ const Dashboard = () => {
                             }}
                           />
                         </>
-                      ) : (
-                        <Whiteboard />
                       )}
+                      {step === STEPS.Whiteboard && <Whiteboard />}
+                      {step === STEPS.Notes && <Notes />}
                     </div>
                     <div className="relative bg-blueGray-700 w-full h-1/6">
                       <button

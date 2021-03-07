@@ -36,6 +36,10 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('update_website', link)
   );
 
+  socket.on('update_notes', (notes) =>
+    socket.broadcast.emit('update_notes', notes)
+  );
+
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
   });
