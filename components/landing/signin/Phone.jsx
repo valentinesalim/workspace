@@ -13,6 +13,7 @@ const OTPDigit = () => (
 const Mobile = ({ auth, phone, setPhone, advance, close }) => {
   const [OTP, setOTP] = useState(null);
   const [error, setError] = useState(null);
+  const [OTPLoading, setOTPLoading] = useState(false);
 
   const OTPRef = useRef();
 
@@ -21,6 +22,7 @@ const Mobile = ({ auth, phone, setPhone, advance, close }) => {
   }, []);
 
   const generateOTP = async () => {
+    setOTPLoading(true);
     try {
       const response = await axios.post(
         '/api/proxy?proxyRoute=sendotpnotivize',
@@ -36,6 +38,7 @@ const Mobile = ({ auth, phone, setPhone, advance, close }) => {
     } catch (err) {
       console.info(err);
     }
+    setOTPLoading(false);
   };
 
   const verifyOTP = () => {
@@ -84,8 +87,9 @@ const Mobile = ({ auth, phone, setPhone, advance, close }) => {
               <button
                 onClick={generateOTP}
                 className="w-1/2 text-white bg-pri-blue px-8 py-1 ml-1 rounded-lg shadow-sm text-lg"
+                disabled={OTPLoading}
               >
-                Submit
+                {OTPLoading ? "Getting OTP" : "Submit"}
               </button>
             </div>
             <p className="text-sm text-pri-gray text-center ">
