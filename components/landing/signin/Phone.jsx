@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import axios from 'axios';
@@ -10,11 +10,15 @@ const OTPDigit = () => (
   />
 );
 
-const Mobile = ({ phone, setPhone, advance, close }) => {
+const Mobile = ({ auth, phone, setPhone, advance, close }) => {
   const [OTP, setOTP] = useState(null);
   const [error, setError] = useState(null);
 
   const OTPRef = useRef();
+
+  useEffect(()=>{
+    auth.user && auth.user.phone && advance();
+  }, []);
 
   const generateOTP = async () => {
     const parsedNumber = phone.substring(phone.indexOf('+') + 1);
@@ -22,7 +26,7 @@ const Mobile = ({ phone, setPhone, advance, close }) => {
 
     try {
       const response = await axios.post(
-        '/api/sendotp',
+        '/api/proxy?proxyRoute=sendotp',
         {
           token: 'hackers',
           receiver: parsedNumber

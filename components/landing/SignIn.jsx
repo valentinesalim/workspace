@@ -20,14 +20,18 @@ const Content = ({ setOpen }) => {
 
   const advance = () => setStep(step + 1);
 
+  const finalState = () => {
+    router.push(LOGGED_IN_URL);
+    setOpen(false);
+  };
+
   useEffect(() => {
-    if (step == STEPS.Closed) {
-      auth.updateUser({ phone }).then(() => {
-        router.push(LOGGED_IN_URL);
-        setOpen(false);
-      });
+    if (auth.user && auth.user.phone) {
+      finalState();
+    } else if (step == STEPS.Closed) {
+      auth.updateUser({ phone }).then(finalState);
     }
-  }, []);
+  }, [step]);
 
   switch (step) {
     case STEPS.Login:
@@ -35,6 +39,7 @@ const Content = ({ setOpen }) => {
     case STEPS.Phone:
       return (
         <Phone
+          auth={auth}
           phone={phone}
           setPhone={(value) => setPhone(value)}
           close={() => setOpen(false)}
