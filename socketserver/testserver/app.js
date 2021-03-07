@@ -32,6 +32,10 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('clear_whiteboard')
   );
 
+  socket.on('update_website', (link) =>
+    socket.broadcast.emit('update_website', link)
+  );
+
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
   });
