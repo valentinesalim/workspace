@@ -8,12 +8,14 @@ import Message from '@/components/dashboard/Message';
 import moment from 'moment';
 import sanitize from '@/utils/linkSanitizer';
 import Whiteboard from '@/components/dashboard/Whiteboard';
+import io from 'socket.io-client';
 
 import { useRouter } from 'next/router';
 import { addMessage, retrieveRoomData } from '@/lib/firestore';
 
 const Dashboard = () => {
   const auth = useAuth();
+
   const router = useRouter();
   const [website, setWebsite] = useState('https://tailwindcss.com/');
   const [websiteInput, setWebsiteInput] = useState('https://tailwindcss.com/');
@@ -54,6 +56,8 @@ const Dashboard = () => {
 
   const updateWebsite = (e) => {
     e.preventDefault();
+
+    const socketRef = io.connect('http://localhost:8080');
     const URLExpression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
     const regex = new RegExp(URLExpression);
@@ -62,6 +66,8 @@ const Dashboard = () => {
 
     const sanitizedLink = sanitize(websiteInput);
     setWebsite(sanitizedLink);
+
+    socketRef.emit('update_website', sanitizedLink);
   };
 
   useEffect(() => {
@@ -71,7 +77,18 @@ const Dashboard = () => {
     };
 
     fetchMessages();
-  }, [roomId]);
+  }, [sessionMessages, roomId]);
+
+  useEffect(() => {
+    const socketRef = io.connect('http://localhost:8080');
+
+    socketRef.on('update_website', (link) => {
+      setWebsiteInput(link);
+      setWebsite(link);
+    });
+
+    return () => socketRef.disconnect();
+  }, []);
 
   return (
     <div className="bg-gray-900 w-full">
