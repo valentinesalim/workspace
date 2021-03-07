@@ -11,6 +11,7 @@ import io from 'socket.io-client';
 import { addMessage, getUser } from '@/lib/firestore';
 import Notes from '@/components/dashboard/Notes';
 import { useAV } from '@/lib/peer';
+import InviteFriendsModal from '@/components/dashboard/InviteFriendsModal';
 
 const STEPS = {
   Browser: 0,
@@ -25,13 +26,14 @@ const videoCallers = [
   'https://avatars.githubusercontent.com/u/13199016?s=460&u=40af1d489c8cdfa2ee4fbf3bf8e8fb68ada19aae&v=4'
 ];
 
-const Dashboard = ({ roomData: {roomId, messages = []}, auth }) => {
+const Dashboard = ({ roomData: { roomId, messages = [] }, auth }) => {
   const { socket } = useAV();
   const [website, setWebsite] = useState('https://tailwindcss.com/');
   const [websiteInput, setWebsiteInput] = useState('https://tailwindcss.com/');
   const [message, setMessage] = useState('');
   const [sessionMessages, setSessionMessages] = useState(messages);
   const [open, setOpen] = useState(false);
+  const [openInvite, setOpenInvite] = useState(false);
   const [whiteboardMode, setWhiteboardMode] = useState(false);
   const [step, setStep] = useState(0);
   const [onlineUsers, setOnlineUsers] = useState(videoCallers);
@@ -84,16 +86,16 @@ const Dashboard = ({ roomData: {roomId, messages = []}, auth }) => {
     });
 
     const rosterUpdate = async (uids) => {
-      console.log('Uids', uids)
-      const roomUsers = await Promise.all(uids.map(uid => getUser(uid)));
-      console.log(roomUsers, uids)
-      const avatars = roomUsers.map(user => user.photoUrl);
+      console.log('Uids', uids);
+      const roomUsers = await Promise.all(uids.map((uid) => getUser(uid)));
+      console.log(roomUsers, uids);
+      const avatars = roomUsers.map((user) => user.photoUrl);
       setOnlineUsers(avatars);
     };
 
     if (socket) {
-      console.log('SocketIO Subscribe', roomId)
-      socket.emit('roomjoin', {roomId});
+      console.log('SocketIO Subscribe', roomId);
+      socket.emit('roomjoin', { roomId });
 
       socket.on('roster', (users) => {
         console.log('Roster Update', users);
@@ -164,7 +166,10 @@ const Dashboard = ({ roomData: {roomId, messages = []}, auth }) => {
                         <h1 className="text-white font-normal text-3xl">
                           Chat
                         </h1>
-                        <button className=" rounded shadow-sm bg-blue-700 px-2 py-2 text-white text-sm font-semibold">
+                        <button
+                          onClick={() => setOpenInvite(true)}
+                          className=" rounded shadow-sm bg-blue-700 px-2 py-2 text-white text-sm font-semibold"
+                        >
                           Invite Friends
                         </button>
                       </div>
@@ -228,6 +233,7 @@ const Dashboard = ({ roomData: {roomId, messages = []}, auth }) => {
         )}
       </div>
       {open && <LeaveCallModal setOpen={setOpen} />}
+      {openInvite && <InviteFriendsModal setOpenInvite={setOpenInvite} />}
     </div>
   );
 };

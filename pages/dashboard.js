@@ -8,6 +8,7 @@ import Message from '@/components/dashboard/Message';
 import moment from 'moment';
 import sanitize from '@/utils/linkSanitizer';
 import Whiteboard from '@/components/dashboard/Whiteboard';
+import InviteFriendsModal from '@/components/dashboard/InviteFriendsModal';
 
 const Dashboard = () => {
   const auth = useAuth();
@@ -16,6 +17,7 @@ const Dashboard = () => {
   const [message, setMessage] = useState('');
   const [sessionMessages, setSessionMessages] = useState([]);
   const [open, setOpen] = useState(false);
+  const [openInvite, setOpenInvite] = useState(false);
   const [whiteboardMode, setWhiteboardMode] = useState(false);
 
   const videoCallers = [
@@ -115,7 +117,10 @@ const Dashboard = () => {
                         <h1 className="text-white font-normal text-3xl">
                           Chat
                         </h1>
-                        <button className=" rounded shadow-sm bg-blue-700 px-2 py-2 text-white text-sm font-semibold">
+                        <button
+                          onClick={() => setOpenInvite(true)}
+                          className="rounded shadow-sm bg-blue-700 px-2 py-2 text-white text-sm font-semibold"
+                        >
                           Invite Friends
                         </button>
                       </div>
@@ -179,6 +184,7 @@ const Dashboard = () => {
         )}
       </div>
       {open && <LeaveCallModal setOpen={setOpen} />}
+      {openInvite && <InviteFriendsModal setOpenInvite={setOpenInvite} />}
     </div>
   );
 };
