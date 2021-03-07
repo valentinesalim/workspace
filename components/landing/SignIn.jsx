@@ -21,7 +21,6 @@ const Content = ({ setOpen }) => {
   const advance = () => setStep(step + 1);
 
   const finalState = () => {
-    router.push(LOGGED_IN_URL);
     setOpen(false);
   };
 

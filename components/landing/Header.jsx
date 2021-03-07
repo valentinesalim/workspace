@@ -4,11 +4,19 @@ import { useAuth } from '@/lib/auth';
 import { LOGGED_IN_URL } from '@/lib/constants';
 import Navbar from '@/components/landing/Navbar';
 import Signin from './SignIn';
+import { createRoom } from '@/lib/firestore';
 
 const Header = () => {
   const { user } = useAuth();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+
+  const onCreateRoom = () => {
+    createRoom(user.name).then((id) => {
+      router.push(`/dashboard/${id}`);
+    });
+  };
+
   return (
     <div className="bg-hero-img bg-cover h-full">
       <Navbar />
@@ -25,18 +33,24 @@ const Header = () => {
                 your productivity
               </p>
             </div>
-            <button
-              onClick={() => {
-                if (user) {
-                  return router.push(LOGGED_IN_URL);
-                }
-                setOpen(true);
-                console.log('activated');
-              }}
-              className="text-white font-semibold bg-pri-orange px-8 py-3 rounded-lg shadow-sm text-lg"
-            >
-              Start Now
-            </button>
+            {!user ? (
+              <button
+                onClick={() => {
+                  setOpen(true);
+                  console.log('activated');
+                }}
+                className="text-white font-semibold bg-pri-orange px-8 py-3 rounded-lg shadow-sm text-lg"
+              >
+                Start Now
+              </button>
+            ) : (
+              <button
+                onClick={onCreateRoom}
+                className="text-white font-semibold bg-green-500 px-8 py-3 rounded-lg shadow-sm text-lg"
+              >
+                Create Room
+              </button>
+            )}
           </div>
           <div className="md:w-1/2">
             <img
