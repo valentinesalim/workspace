@@ -8,12 +8,14 @@ import Message from '@/components/dashboard/Message';
 import moment from 'moment';
 import sanitize from '@/utils/linkSanitizer';
 import Whiteboard from '@/components/dashboard/Whiteboard';
+import io from 'socket.io-client';
 
 import { useRouter } from 'next/router';
 import { addMessage, retrieveRoomData } from '@/lib/firestore';
 
 const Dashboard = () => {
   const auth = useAuth();
+  const socketRef = io.connect('http://localhost:8080');
   const router = useRouter();
   const [website, setWebsite] = useState('https://tailwindcss.com/');
   const [websiteInput, setWebsiteInput] = useState('https://tailwindcss.com/');
