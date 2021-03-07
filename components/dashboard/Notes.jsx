@@ -4,9 +4,9 @@ import { saveAs } from 'file-saver';
 import { Packer, Document, HeadingLevel, Paragraph } from 'docx';
 
 import { debounce } from 'debounce';
-const socketRef = io.connect('http://localhost:8080');
 
-const Notes = () => {
+const Notes = ({socketUrl}) => {
+  const socketRef = io.connect(socketUrl);
   const [notes, setNotes] = useState(localStorage.getItem('notes') ?? '');
 
   const handleChange = (e) => {

@@ -26,7 +26,11 @@ const videoCallers = [
   'https://avatars.githubusercontent.com/u/13199016?s=460&u=40af1d489c8cdfa2ee4fbf3bf8e8fb68ada19aae&v=4'
 ];
 
-const Dashboard = ({ roomData: { roomId, messages = [] }, auth }) => {
+const Dashboard = ({
+  roomData: { roomId, messages = [] },
+  auth,
+  socketUrl
+}) => {
   const { socket } = useAV();
   const [website, setWebsite] = useState('https://tailwindcss.com/');
   const [websiteInput, setWebsiteInput] = useState('https://tailwindcss.com/');
@@ -64,7 +68,7 @@ const Dashboard = ({ roomData: { roomId, messages = [] }, auth }) => {
   const updateWebsite = (e) => {
     e.preventDefault();
 
-    const socketRef = io.connect('http://localhost:8080');
+    const socketRef = io.connect(socketUrl);
     const URLExpression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
     const regex = new RegExp(URLExpression);
@@ -78,7 +82,7 @@ const Dashboard = ({ roomData: { roomId, messages = [] }, auth }) => {
   };
 
   useEffect(() => {
-    const socketRef = io.connect('http://localhost:8080');
+    const socketRef = io.connect(socketUrl);
 
     socketRef.on('update_website', (link) => {
       setWebsiteInput(link);
@@ -86,9 +90,7 @@ const Dashboard = ({ roomData: { roomId, messages = [] }, auth }) => {
     });
 
     const rosterUpdate = async (uids) => {
-      console.log('Uids', uids);
       const roomUsers = await Promise.all(uids.map((uid) => getUser(uid)));
-      console.log(roomUsers, uids);
       const avatars = roomUsers.map((user) => user.photoUrl);
       setOnlineUsers(avatars);
     };
@@ -141,8 +143,10 @@ const Dashboard = ({ roomData: { roomId, messages = [] }, auth }) => {
                           />
                         </>
                       )}
-                      {step === STEPS.Whiteboard && <Whiteboard />}
-                      {step === STEPS.Notes && <Notes />}
+                      {step === STEPS.Whiteboard && (
+                        <Whiteboard socketUrl={socketUrl} />
+                      )}
+                      {step === STEPS.Notes && <Notes socketUrl={socketUrl} />}
                     </div>
                     <div className="relative bg-blueGray-700 w-full h-1/6">
                       <button

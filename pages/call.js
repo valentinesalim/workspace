@@ -12,10 +12,10 @@ const CallingScreen = dynamic(() => import('@/components/dashboard/CallScreen'),
   loading: () => <Loader />
 });
 
-const Call = () => {
+const Call = ({ socketUrl }) => {
   const auth = useAuth();
   return (
-    <AVProvider auth={auth}>
+    <AVProvider auth={auth} socketUrl={socketUrl}>
       <CallingScreen />
     </AVProvider>
   );

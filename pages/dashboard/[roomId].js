@@ -15,11 +15,11 @@ export async function getServerSideProps({ params: { roomId } }) {
   return { props: { roomData: {...roomData, roomId} } };
 }
 
-const Room = ({ roomData }) => {
+const Room = ({ roomData, socketUrl }) => {
   const auth = useAuth();
 
-  return (<AVProvider auth={auth}>
-      <Dashboard roomData={roomData} auth={auth}/>
+  return (<AVProvider auth={auth} socketUrl={socketUrl}>
+      <Dashboard roomData={roomData} socketUrl={socketUrl} auth={auth}/>
     </AVProvider>
   );
 };
