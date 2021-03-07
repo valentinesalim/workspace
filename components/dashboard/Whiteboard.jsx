@@ -2,14 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 
 const Whiteboard = () => {
-  const socketRef = io.connect('http://localhost:8080');
-
   let timeout = useState(undefined);
   const [tooltype, setToolType] = useState('draw');
   const canvasRef = useRef(null);
   const colorsRef = useRef(null);
 
   useEffect(() => {
+    const socketRef = io.connect('http://localhost:8080');
     // --------------- getContext() method returns a drawing context on the canvas-----
     const canvas = canvasRef.current;
     const test = colorsRef.current;
@@ -199,6 +198,8 @@ const Whiteboard = () => {
 
     socketRef.on('drawing', onDrawingEvent);
     socketRef.on('clear_whiteboard', clearWhiteboardEvent);
+
+    return () => socketRef.disconnect();
   }, []);
 
   const clearWhiteboard = () => {
