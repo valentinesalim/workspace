@@ -21,17 +21,13 @@ const Mobile = ({ auth, phone, setPhone, advance, close }) => {
   }, []);
 
   const generateOTP = async () => {
-    const parsedNumber = phone.substring(phone.indexOf('+') + 1);
-    console.log(parsedNumber);
-
     try {
       const response = await axios.post(
-        '/api/proxy?proxyRoute=sendotp',
+        '/api/proxy?proxyRoute=sendotpnotivize',
         {
-          token: 'hackers',
-          receiver: parsedNumber
-        },
-        { headers }
+          token: process.env.NEXT_PUBLIC_BACKEND_TOKEN,
+          receiver: phone
+        }
       );
 
       const { otp } = response.data;
