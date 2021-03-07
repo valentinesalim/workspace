@@ -7,7 +7,7 @@ const Message = ({ msg, sender, photoURL, time }) => {
   const isLink = msg.match(regex);
 
   return (
-    <div className="flex flex-row justify-start w-full overflow-x-scroll">
+    <div className="flex flex-row justify-start w-full overflow-x-hidden">
       <img
         className="w-12 h-12 mb-4 lg:mb-0 bg-cover rounded-full mr-2"
         src={photoURL}
