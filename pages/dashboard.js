@@ -143,7 +143,7 @@ const Dashboard = () => {
                             </div>
                           )}
                           {sessionMessages.map((message, idx) => (
-                            <Messag key={idx} {...message} />
+                            <Message key={idx} {...message} />
                           ))}
                         </div>
                       </div>
