@@ -58,3 +58,7 @@ Others:
 
 ## What's next for Work.space
 - Fix and polish up the rest of it
+
+Preview
+
+![alt text](https://res.cloudinary.com/valentinesalim/image/upload/v1615881408/devpost-mockup_h9vvi7.jpg)
